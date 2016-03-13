@@ -13,7 +13,8 @@ use Mix.Config
 # which you typically run after static files are built.
 config :paladin, Paladin.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [scheme: "https", host: "paladin.opendoor.com", port: 433],
+  # Add your own to the umbrella apps config
+  # url: [scheme: "https", host: "xxxxxxx", port: 433],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE")

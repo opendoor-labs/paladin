@@ -39,6 +39,8 @@ defmodule Paladin.Mixfile do
      {:uuid, "~> 1.1"},
      {:comeonin, "~> 2.1"},
      {:guardian, "~> 0.10.1"},
+     {:ueberauth, "~> 0.2.0"},
+     {:ueberauth_identity, "~> 0.2.3"},
      {:cowboy, "~> 1.0"}]
   end
 

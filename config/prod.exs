@@ -28,11 +28,6 @@ config :paladin, Paladin.Repo,
   url: System.get_env("DATABASE_URL"),
   pool_size: 20
 
-config :paladin, Paladin.UserRepo,
-  adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("USER_DATABASE_URL"),
-  pool_size: 10
-
 config :guardian, Guardian,
   secret_key: System.get_env("GUARDIAN_SECRET_KEY_BASE")
 

@@ -14,5 +14,5 @@ defmodule Paladin.UserLogin do
   provide the permissions map that will be used in Paladins Guardian token.
   This is for people using the front end of Paladin rather than services.
   """
-  @callback user_paladin_permissions(any) :: int | Map.t
+  @callback user_paladin_permissions(any) :: Integer.t | Map.t
 end

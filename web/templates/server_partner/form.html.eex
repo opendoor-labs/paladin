@@ -1,0 +1,83 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= if @server_partner.id do %>
+    <div class='form-group'>
+      <div>
+        <%= label f, :server_service_id, class: "control-label" %>
+        <%=
+          link "#{@server_partner.server_service.name}@#{@server_partner.server_service.environment}",
+            to: service_path(@conn, :show, @server_partner.server_service)
+        %>
+      </div>
+      <div>
+        <%= label f, :client_service_id, class: "control-label" %>
+        <%=
+          link "#{@server_partner.client_service.name}@#{@server_partner.client_service.environment}",
+            to: service_path(@conn, :show, @server_partner.client_service)
+        %>
+      </div>
+    </div>
+  <% else %>
+    <div class='form-group'>
+      <%= label f, :server_service_id, class: "control-label" %>
+      <% server_selects = for service <- @services, do: {"#{service.name}@#{service.environment}", service.id} %>
+      <%= select f, :server_service_id, server_selects, class: "form-control" %>
+      <%= error_tag f, :server_service_id %>
+    </div>
+  <% end %>
+
+  <div class='form-group'>
+    <%= label f, :ttl_seconds, class: "control-label" do %>
+      Max Time to live (seconds):
+    <% end %>
+    <%= number_input f, :ttl_seconds, class: "form-control" %>
+  </div>
+
+  <div class='row'>
+    <%= for {group, perms} <- available_permissions do %>
+      <div class='col-xs-3'>
+        <h4><%= group |> humanize %></h4>
+        <ul class='list-unstyled'>
+          <li>
+            <label for=<%= "permissions-#{group}-max-id" %>>
+              <input type="checkbox"
+                     id=<%= "permissions-#{group}-max-id" %>
+                     value="max"
+                     name="partner[permissions][<%= group %>][]"
+                     <%= if has_permission? @server_partner, group, -1 do %>
+                       checked=true
+                     <% end %>
+              >
+              All
+            </label>
+          </li>
+          <%= for perm <- perms do %>
+            <li>
+              <% label_id = "permissions-#{group}-#{perm}-id" %>
+              <label for=<%= label_id %>>
+                <input type="checkbox"
+                       id=<%= label_id %>
+                       value=<%= perm %>
+                       name="partner[permissions][<%= group %>][]"
+                       <%= if has_permission? @server_partner, group, perm do %>
+                         checked=true
+                       <% end %>
+                >
+                <%= perm %>
+              </label>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

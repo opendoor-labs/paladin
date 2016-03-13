@@ -1,0 +1,10 @@
+<div class='col-sm-12'>
+  <h2>Show server partner</h2>
+
+  <ul>
+
+  </ul>
+
+  <%= link "Edit", to: service_server_partner_path(@conn, :edit, @server_partner.client_service_id, @server_partner) %>
+  <%= link "Back", to: service_path(@conn, :show, @server_partner.client_service_id) %>
+</div>

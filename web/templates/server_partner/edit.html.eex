@@ -1,0 +1,11 @@
+<div class='col-sm-12'>
+  <h2>Edit service configuration</h2>
+
+  <%= render "form.html", changeset: @changeset,
+                          action: service_server_partner_path(@conn, :update, @server_partner.client_service_id, @server_partner),
+                          services: @services,
+                          service: @service,
+                          conn: @conn,
+                          server_partner: @server_partner
+   %>
+</div>

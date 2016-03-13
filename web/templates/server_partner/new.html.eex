@@ -1,0 +1,14 @@
+<div class='col-sm-12'>
+  <h2>New server partner</h2>
+  <h4><%= @service.name %> talks to</h4>
+
+  <%= render "form.html", changeset: @changeset,
+                          action: service_server_partner_path(@conn, :create, @service),
+                          services: @services,
+                          service: @service,
+                          conn: @conn,
+                          server_partner: @server_partner
+   %>
+
+  <%= link "Back", to: service_path(@conn, :show, @service) %>
+</div>

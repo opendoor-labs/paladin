@@ -1,0 +1,159 @@
+<div class='col-sm-12'>
+  <h2><%= @service.name %>@<%= @service.environment %></h2>
+  <div>
+    <%= link "Reset Secret",
+             to: service_reset_secret_path(@conn, :reset_secret, @service),
+             method: :patch,
+             class: "btn btn-danger"
+    %>
+  </div>
+
+  <ul>
+
+    <li>
+      <strong>Name:</strong>
+      <%= @service.name %>
+    </li>
+
+    <li>
+      <strong>Short Name:</strong>
+      <%= @service.short_name %>
+    </li>
+
+    <li>
+      <strong>Environment:</strong>
+      <%= @service.environment %>
+    </li>
+
+    <li>
+      <strong>UID:</strong>
+      <%= @service.uuid %>
+    </li>
+
+    <li>
+      <strong>Secret:</strong>
+      <%= @service.secret %>
+    </li>
+
+  </ul>
+
+  <h3>Services <%= @service.name %> may connect to</h3>
+
+  <%= if length(@service.client_partners) == 0 do %>
+    <div class='alert alert-info'>
+      No services.
+      <%= link "Add one.", to: service_server_partner_path(@conn, :new, @service) %>
+    </div>
+  <% else %>
+    <table class='table'>
+      <thead>
+        <th>Name</th>
+        <th>Short Name</th>
+        <th>Environment</th>
+        <th>UUID</th>
+        <th>Permissions</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <%= for client_partner <- @service.client_partners do %>
+          <tr>
+            <td>
+              <%= link client_partner.server_service.name, to: service_path(@conn, :show, client_partner.server_service.id) %>
+            </td>
+            <td><%= client_partner.server_service.short_name %></td>
+            <td><%= client_partner.server_service.environment %></td>
+            <td><%= client_partner.server_service.uuid %></td>
+            <td>
+              <ul class='list-unstyled'>
+              <%= for {group, perms} <- client_partner.permissions do %>
+                <li>
+                  <label><%= group %></label>
+                  <%= if perms == -1 do %>
+                    MAX
+                  <% else %>
+                    <%= Guardian.Permissions.to_list(perms, group) |> Enum.join(", ") %>
+                  <% end %>
+              <% end %>
+              </ul>
+            </td>
+            <td>
+              <%=
+                link "Delete",
+                     to: service_server_partner_path(@conn, :delete, client_partner.client_service_id, client_partner),
+                     method: :delete,
+                     data: [confirm: "Are you sure?"],
+                     class: "btn btn-danger btn-xs"
+               %>
+              <%=
+                link "Edit",
+                     to: service_server_partner_path(@conn, :edit, client_partner.client_service_id, client_partner),
+                     data: [confirm: "Are you sure?"],
+                     class: "btn btn-warning btn-xs"
+               %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= link "Add", to: service_server_partner_path(@conn, :new, @service), class: "btn btn-xs btn-primary" %>
+  <% end %>
+
+  <h3>Services connecting to <%= @service.name %></h3>
+  <%= if length(@service.server_partners) == 0 do %>
+    <div class='alert alert-info'>No services connecting</div>
+  <% else %>
+    <table class='table'>
+      <thead>
+        <th>Name</th>
+        <th>Short Name</th>
+        <th>Environment</th>
+        <th>UUID</th>
+        <th>Permissions</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <%= for server_partner <- @service.server_partners do %>
+          <tr>
+            <td>
+              <%= link server_partner.client_service.name, to: service_path(@conn, :show, server_partner.client_service_id) %>
+            </td>
+            <td><%= server_partner.client_service.short_name %></td>
+            <td><%= server_partner.client_service.environment %></td>
+            <td><%= server_partner.client_service.uuid %></td>
+            <td>
+              <ul class='list-unstyled'>
+              <%= for {group, perms} <- server_partner.permissions do %>
+                <li>
+                  <label><%= group %></label>
+                  <%= if perms == -1 do %>
+                    MAX
+                  <% else %>
+                    <%= Guardian.Permissions.to_list(perms, group) |> Enum.join(", ") %>
+                  <% end %>
+              <% end %>
+              </ul>
+            </td>
+            <td>
+              <%=
+                link "Delete",
+                     to: service_path(@conn, :show, server_partner.client_service_id),
+                     data: [confirm: "Are you sure?"],
+                     class: "btn btn-danger btn-xs"
+               %>
+              <%=
+                link "Edit",
+                     to: service_server_partner_path(@conn, :edit, server_partner.client_service_id, server_partner),
+                     data: [confirm: "Are you sure?"],
+                     class: "btn btn-warning btn-xs"
+               %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <%= link "Edit", to: service_path(@conn, :edit, @service) %>
+  |
+  <%= link "Services", to: service_path(@conn, :index) %>
+</div>

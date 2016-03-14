@@ -249,6 +249,10 @@ use Mix.Config
 
 config :paladin, Paladin.Endpoint,
   url: [scheme: "https", host: "paladin.my-application.com", port: 433]
+
+
+config :paladin, Plug.Session,
+  signing_salt: "some_salt"
 ```
 
 All other required configuration is exported as environment variables that need
@@ -259,7 +263,6 @@ to be set. Here is a list of them:
 * `DATABASE_URL` - The db url for the Paladin.Repo
 * `GUARDIAN_SECRET_KEY_BASE` - The Guardian secret for signing Paladins JWTs for
   accessing the UI.
-* `PALADIN_SESSION_SALT` - The salt for Paladins session signing
 
 All of these can of course be overwritten by overwriting the required config
 fields. The can all be found in `apps/paladin/config/prod.exs`

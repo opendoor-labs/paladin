@@ -32,3 +32,5 @@ config :paladin, Paladin.Repo,
 config :guardian, Guardian,
   secret_key: System.get_env("GUARDIAN_SECRET_KEY_BASE")
 
+config :paladin, Plug.Session,
+  signing_salt: System.get_env("PALADIN_SESSION_SALT")

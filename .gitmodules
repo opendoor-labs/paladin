@@ -1,0 +1,3 @@
+[submodule "apps/paladin"]
+	path = apps/paladin
+	url = https://github.com/opendoor-labs/paladin.git

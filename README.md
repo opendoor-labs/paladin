@@ -266,6 +266,26 @@ fields. The can all be found in `apps/paladin/config/prod.exs`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
+## Deploying
+
+Paladin is best kept behind a firewall if possible. It's not however required.
+
+You _can_ deploy to heroku if you want. To do this configure the url host in
+your umbrella application and use the following buildbacks:
+
+```
+https://github.com/HashNuke/heroku-buildpack-elixir.git
+https://github.com/gjaldon/heroku-buildpack-phoenix-static.git
+```
+
+You'll also need to setup a configuration file to compile assets correctly:
+
+`phoenix_static_buildpack.config`
+
+```
+phoenix_relative_path=apps/paladin
+```
+
 #### Example Python Client:
 ```python
 

@@ -11,7 +11,6 @@ defmodule Paladin do
       supervisor(Paladin.Endpoint, []),
       # Start the Ecto repository
       supervisor(Paladin.Repo, []),
-      supervisor(Paladin.UserRepo, []),
       # Here you could define other workers and supervisors as children
       # worker(Paladin.Worker, [arg1, arg2, arg3]),
     ]

@@ -19,4 +19,6 @@
   "poolboy": {:hex, :poolboy, "1.5.1"},
   "postgrex": {:hex, :postgrex, "0.11.0"},
   "ranch": {:hex, :ranch, "1.2.1"},
+  "ueberauth": {:hex, :ueberauth, "0.2.0"},
+  "ueberauth_identity": {:hex, :ueberauth_identity, "0.2.3"},
   "uuid": {:hex, :uuid, "1.1.3"}}

@@ -33,7 +33,7 @@ defmodule Paladin.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_paladin_key",
-    signing_salt: "WJtVq6CS"
+    signing_salt: Application.get_env(:paladin, Plug.Session)[:signing_salt]
 
   plug Paladin.Router
 end

@@ -129,7 +129,7 @@ defmodule Paladin.AssertionAuth do
     |> Map.put("perms", new_permissions)
   end
 
-  def maximum_ttl(new_claims, %{"rexp" => requested_ttl} = claims, partnership) do
+  defp maximum_ttl(new_claims, %{"rexp" => requested_ttl} = claims, partnership) do
     current_request = requested_ttl - new_claims["iat"]
     if partnership.ttl_seconds > current_request do
       Map.put(new_claims, "ttl", {current_request, :seconds})
@@ -138,7 +138,7 @@ defmodule Paladin.AssertionAuth do
     end
   end
 
-  def maximum_ttl(new_claims, _claims, partnership) do
+  defp maximum_ttl(new_claims, _claims, partnership) do
     Map.put(new_claims, "ttl", {partnership.ttl_seconds, :seconds})
   end
 end

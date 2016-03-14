@@ -9,7 +9,6 @@ use Mix.Config
 config :paladin, Paladin.Endpoint,
   url: [host: "localhost"],
   root: Path.dirname(__DIR__),
-  secret_key_base: "LOxSDHroTDkAd5cesDkdE38zjsUqhoogGZigOENvDvvw0yYdOrDY5BLO3paWCTFT",
   render_errors: [accepts: ~w(html json)],
   pubsub: [name: Paladin.PubSub,
            adapter: Phoenix.PubSub.PG2]
@@ -26,12 +25,19 @@ config :guardian, Guardian,
   issuer: "Paladin",
   allowed_algos: ["HS512", "HS256"],
   verify_issuer: false,
-  serializer: Paladin.GuardianSerializer,
   permissions: %{
     paladin: [:write_connections, :read_connections],
   }
 
+config :ueberauth, Ueberauth,
+  providers: [
+    identity: { Ueberauth.Strategy.Identity, [callback_methods: ["POST"]] }
+  ]
+
 config :comeonin, :bcrypt_log_rounds, 10
+
+config :paladin, Paladin.LoginController,
+  view_module: Paladin.LoginView
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

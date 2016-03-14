@@ -1,8 +1,8 @@
 <ul class="nav nav-pills pull-right">
-  <%= if user = current_user(@conn) do %>
-    <li><%= user.full_name %></li>
+  <%= if logged_in?(@conn) do %>
+    <li><%= user_display_name(@conn) %></li>
     <li><%= link "Logout", to: logout_path(@conn, :delete), method: :delete %></li>
   <% else %>
-    <li><%= link "Login", to: login_path(@conn, :new) %></li>
+    <li><%= link "Login", to: login_path(@conn, :request, :identity) %></li>
   <% end %>
 </ul>

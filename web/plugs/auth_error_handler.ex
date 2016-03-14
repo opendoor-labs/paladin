@@ -12,7 +12,7 @@ defmodule Paladin.AuthErrorHandler do
       _ ->
         conn
         |> put_flash(:error, "Authenitcation required")
-        |> redirect(to: "/login")
+        |> redirect(to: login_path(conn, :request, :identity))
     end
   end
 
@@ -23,7 +23,7 @@ defmodule Paladin.AuthErrorHandler do
       _ ->
         conn
         |> put_flash(:error, "You are not authorized to see this resource")
-        |> redirect(to: "/login")
+        |> redirect(to: login_path(conn, :request, :identity))
     end
   end
 end

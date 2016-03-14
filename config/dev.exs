@@ -11,6 +11,7 @@ config :paladin, Paladin.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
+  secret_key_base: "LOxSDHroTDkAd5cesDkdE38zjsUqhoogGZigOENvDvvw0yYdOrDY5BLO3paWCTFT",
   watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin"]]
 
 # Watch static and templates for browser reloading.
@@ -33,9 +34,13 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 config :guardian, Guardian,
-  secret_key: "development",
-  permissions: %{
-    paladin: [:write_connections, :read_connections],
-    web: [:approve, :read, :write],
-    addresses: [:wot, :now, :brown, :cow],
-  }
+  secret_key: "development"
+
+config :paladin, Paladin.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "paladin_dev",
+  hostname: "localhost",
+  pool_size: 10
+
+config :paladin, Plug.Session,
+  signing_salt: "development"

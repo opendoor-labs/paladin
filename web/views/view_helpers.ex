@@ -1,3 +1,7 @@
 defmodule Paladin.ViewHelpers do
-  def current_user(conn), do: Guardian.Plug.current_resource(conn)
+  def logged_in?(conn), do: Guardian.Plug.authenticated?(conn)
+  def user_display_name(conn) do
+    {:ok, claims} = Guardian.Plug.claims(conn)
+    claims["display_name"]
+  end
 end

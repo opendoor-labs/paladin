@@ -11,7 +11,7 @@ Paladin.
 mix new paladin_umbrella --umbrella
 cd paladin_umbrella
 git init .
-git submodule add git@github.com:opendoor-labs/paladin.git apps/paladin
+git submodule add https://github.com/opendoor-labs/paladin.git apps/paladin
 mix deps.get
 cd apps/paladin
 npm install
@@ -20,7 +20,81 @@ mix ecto.migrate -r Paladin.Repo
 mix phoenix.server
 ```
 
+### Required Umbrella configuration
+
+There are some things that are required for your umbrella application to
+function.
+
+#### Implement `Paladin.UserLogin` behaviour
+
+You'll need to help Paladin find your user to allow access to the Paladin UI
+itself.
+
+This behaviour requires 3 callbacks to be defined.
+
+* `@callback find_and_verify_user(Ueberauth.Auth.t) :: {:ok, user} | {:error, atom | String.t}`
+  * Finds the user from an Ueberauth.Auth struct. It should find the user and
+    authorize them for access to Paladin.
+* `@callback user_display_name(user) :: String.t`
+  * Fetch the display name for the user found in `find_and_verify_user`
+* `@callback user_paladin_permissions(user) :: Map.t`
+  * Provide a map of permissions (Guardian.Permissions) - including at _least_
+    the Paladin permissions. If you intend all access return
+    ```elixir
+      %{
+        paladin: Guardian.Permissions.max
+      }
+    ```
+
+Once you've implemented your UserLogin behaviour, make sure to include it in
+your config
+
+```elixir
+config :paladin, Paladin.UserLogin,
+  module: MyUmbrellaApp.UserLogin
+```
+
+#### Implement Guardian.Serializer
+
+This is just whatever you'd normally use for the Guardian Serializer based on
+the user that you found in the `Paladin.UserLogin`
+
+```elixir
+config :guardian, Guardian,
+  serializer: MyUmbrellaApp.GuardianSerializer
+```
+
+### Production
+
+Your production configuration should have some additional information in it.
+
+1. Your host for the paladin endpoint
+2. The session signing salt.
+
+```elixir
+use Mix.Config
+
+config :paladin, Paladin.Endpoint,
+  url: [scheme: "https", host: "paladin.my-application.com", port: 433]
+
+config :paladin, Plug.Session,
+  signing_salt: System.get_env("PALADIN_SESSION_SALT")
+```
+
+All other required configuration is exported as environment variables that need
+to be set. Here is a list of them:
+
+* `PORT` - The endpoint port
+* `SECRET_KEY_BASE` - The phoenix endpoint secret key
+* `DATABASE_URL` - The db url for the Paladin.Repo
+* `GUARDIAN_SECRET_KEY_BASE` - The Guardian secret for signing Paladins JWTs for
+  accessing the UI.
+
+All of these can of course be overwritten by overwriting the required config
+fields. The can all be found in `paladin/config/prod.exs`
+
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+
 
 ## General Concepts
 

@@ -27,9 +27,10 @@ defmodule Paladin.Router do
 
     get "/", PageController, :index
 
-    get "/login", SessionController, :new, as: :login
-    post "/login", SessionController, :create, as: :login
-    delete "/logout", SessionController, :delete, as: :logout
+    get "/auth/:strategy", LoginController, :request
+    post "/auth/:strategy/callback", LoginController, :callback
+    get "/auth/:strategy/callback", LoginController, :callback
+    delete "/logout", LoginController, :delete, as: :logout
 
     resources "/services", ServiceController do
       patch "/reset_secret", ServiceController, :reset_secret, as: :reset_secret

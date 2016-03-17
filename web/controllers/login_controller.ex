@@ -19,7 +19,7 @@ defmodule Paladin.LoginController do
 
         conn
         |> Guardian.Plug.sign_in(user, :token, %{perms: perms, display_name: name})
-        |> put_flash(:info, "Logged in #{user.full_name}")
+        |> put_flash(:info, "Logged in #{name}")
         |> redirect(to: service_path(conn, :index))
       {:error, reason} ->
         conn

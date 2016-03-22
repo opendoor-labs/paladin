@@ -134,18 +134,18 @@ Read from the Authorization header and strip out the part after `"Bearer "`
 
 ```ruby
 token = read_auth_header_and_strip_bearer(env)
-decoded_token = JWT.decode token, PALADIN_SECRET, true, { :algorithm => 'HS512' }
+decoded_token = JWT.decode(token, PALADIN_SECRET, true, { :algorithm => 'HS512' }).first
 ```
 
 If you get to here... you have a winner. You can find out who the user is:
 
 ```ruby
 
-case decoded_token["aud"]
+case decoded_token["sub"]
 when "anon"
   nil
 when /^User:.+$/
-  User.find_by_token(decoded_token["aud"].split(":").last)
+  User.find_by_token(decoded_token["sub"].split(":").last)
 else
   raise "NOPE"
 end

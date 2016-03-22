@@ -1,5 +1,7 @@
 # Paladin
 
+<img src="https://dl.dropboxusercontent.com/u/526413/paladin-logo.png" >
+
 Paladin is an implementation of the OAuth2 assertion spec. It is intended to
 provide service to service authentication by using JWT as the credential
 mechanism.

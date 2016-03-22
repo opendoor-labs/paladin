@@ -1,8 +1,9 @@
-<ul class="nav nav-pills pull-right">
+<div class="text-right pull-right">
   <%= if logged_in?(@conn) do %>
-    <li><%= user_display_name(@conn) %></li>
-    <li><%= link "Logout", to: logout_path(@conn, :delete), method: :delete %></li>
+    <span><%= user_display_name(@conn) %></span>
+    <br>
+    <%= link "Logout", to: logout_path(@conn, :delete), method: :delete %>
   <% else %>
-    <li><%= link "Login", to: login_path(@conn, :request, :identity) %></li>
+    <%= link "Login", to: login_path(@conn, :request, :identity) %>
   <% end %>
-</ul>
+</div>

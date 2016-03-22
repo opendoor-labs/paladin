@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" href="<%= static_path(@conn, "/favicon.ico") %>">
 
-    <title>Hello Paladin!</title>
+    <title>Paladin</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
@@ -19,21 +20,20 @@
             <%= render("login.html", conn: @conn) %>
           </nav>
           <%= link to: service_path(@conn, :index) do %>
-            <span class="logo"></span>
+            <img class='logo' src="<%= static_path(@conn, "/images/paladin.svg") %>">
           <% end %>
         </div>
       </header>
+      <div class='col-xs-12'>
 
-      <br>
-      <br>
+        <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+        <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+        <main role="main">
+          <%= render @view_module, @view_template, assigns %>
+        </main>
 
-      <main role="main">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
-
+      </div>
     </div> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>

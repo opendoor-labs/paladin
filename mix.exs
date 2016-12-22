@@ -42,7 +42,7 @@ defmodule Paladin.Mixfile do
      {:gettext, "~> 0.13"},
      {:uuid, "~> 1.1"},
      {:comeonin, "~> 3.0"},
-     {:guardian, "~> 0.13"},
+     {:guardian, "~> 0.14"},
      {:ueberauth, "~> 0.4.0"},
      {:ueberauth_identity, "~> 0.2.3"},
      {:cowboy, "~> 1.0"}]

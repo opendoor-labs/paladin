@@ -66,12 +66,12 @@ defmodule Paladin.AssertionAuth do
       |> filter_max_permissions(claims, partnership)
       |> maximum_ttl(claims, partnership)
 
-    claims = Map.drop(claims, ~w(perms pem ttl))
+    claims = Map.drop(claims, ~w(perms pem ttl rexp exp))
     merged_claims = Map.merge(claims, default_claims)
 
     Guardian.encode_and_sign(
       claims["sub"],
-      claims["typ"] || :token,
+      claims["typ"] || :access,
       merged_claims
     )
   end

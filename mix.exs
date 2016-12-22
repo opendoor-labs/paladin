@@ -3,12 +3,12 @@ defmodule Paladin.Mixfile do
 
   def project do
     [app: :paladin,
-     version: "0.0.1",
+     version: "0.1.0",
      build_path: "../../_build",
      config_path: "../../config/config.exs",
      deps_path: "../../deps",
      lockfile: "../../mix.lock",
-     elixir: "~> 1.0",
+     elixir: "~> 1.3",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -34,16 +34,16 @@ defmodule Paladin.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.4"},
-     {:phoenix_ecto, "~> 2.0"},
+    [{:phoenix, "~> 1.2.1"},
+     {:phoenix_ecto, "~> 3.2.1"},
      {:postgrex, ">= 0.0.0"},
-     {:phoenix_html, "~> 2.4"},
-     {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:gettext, "~> 0.9"},
+     {:phoenix_html, "~> 2.9.1"},
+     {:phoenix_live_reload, "~> 1.0.6", only: :dev},
+     {:gettext, "~> 0.13"},
      {:uuid, "~> 1.1"},
-     {:comeonin, "~> 2.1"},
-     {:guardian, "~> 0.10.1"},
-     {:ueberauth, "~> 0.2.0"},
+     {:comeonin, "~> 3.0"},
+     {:guardian, "~> 0.14"},
+     {:ueberauth, "~> 0.4.0"},
      {:ueberauth_identity, "~> 0.2.3"},
      {:cowboy, "~> 1.0"}]
   end

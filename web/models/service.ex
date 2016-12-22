@@ -17,29 +17,33 @@ defmodule Paladin.Service do
     timestamps
   end
 
+  @required_register_fields ~w(name short_name environment)a
+  @optional_update_fields ~w(name short_name secret)a
+
   @doc """
   Creates a changeset based on the `model` and `params`.
 
   If no params are provided, an invalid changeset is returned
   with no validation performed.
   """
-  def register_changeset(model, params \\ :empty) do
+  def register_changeset(model, params \\ %{}) do
     model
-    |> cast(params, ~w(name short_name environment), ~w(secret))
+    |> cast(params, @required_register_fields ++ ~w(secret)a)
+    |> validate_required(@required_register_fields)
     |> set_uuid
     |> maybe_set_secret
     |> common_validations
   end
 
-  def update_changeset(model, params \\ :empty) do
+  def update_changeset(model, params \\ %{}) do
     model
-    |> cast(params, ~w(), ~w(name short_name secret))
+    |> cast(params, @optional_update_fields)
     |> common_validations
   end
 
   def reset_secret_changeset(model) do
     model
-    |> cast(%{}, ~w(), ~w())
+    |> cast(%{}, [])
     |> put_change(:secret, generate_secret)
   end
 

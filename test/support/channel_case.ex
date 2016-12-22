@@ -32,8 +32,10 @@ defmodule Paladin.ChannelCase do
   end
 
   setup tags do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Paladin.Repo)
+
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Paladin.Repo, [])
+      Ecto.Adapters.SQL.Sandbox.mode(Paladin.Repo, {:shared, self()})
     end
 
     :ok

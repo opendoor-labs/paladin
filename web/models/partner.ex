@@ -11,8 +11,9 @@ defmodule Paladin.Partner do
     timestamps
   end
 
-  @required_fields ~w(server_service_id client_service_id)
-  @optional_fields ~w(permissions ttl_seconds)
+  @required_fields ~w(server_service_id client_service_id)a
+  @optional_fields ~w(permissions ttl_seconds)a
+  @all_fields @required_fields ++ @optional_fields
 
   @goc """
   Creates a changeset based on the `model` and `params`.
@@ -20,8 +21,9 @@ defmodule Paladin.Partner do
   If no params are provided, an invalid changeset is returned
   with no validation performed.
   """
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @all_fields)
+    |> validate_required(@required_fields)
   end
 end

@@ -88,6 +88,6 @@ defmodule Paladin.ServiceTest do
   test "updating with the same name and environemnt" do
     {:ok, _service} = Service.register_changeset(%Service{}, @valid_attrs) |> Repo.insert
     {:error, cs} = Service.register_changeset(%Service{}, @valid_attrs) |> Repo.insert
-    assert Keyword.get(cs.errors, :name_environment) == "has already been taken"
+    assert Keyword.get(cs.errors, :name_environment) == {"has already been taken", []}
   end
 end

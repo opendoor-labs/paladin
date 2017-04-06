@@ -159,7 +159,7 @@ you can do:
 ### Permissions
 
 When you configure one service to connect to another, you have an opportunity to
-limit the permissions that may be granted. When generating the assertiong token, you should
+limit the permissions that may be granted. When generating the assertion token, you should
 include permissions that you want to request encoded using Guardian.Permissions method (a map of
 bitstrings). Paladin will check the permissions requested against the maximum
 permissions granted in Paladin. The resulting access token will have the

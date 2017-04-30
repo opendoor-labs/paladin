@@ -27,7 +27,8 @@ config :guardian, Guardian,
   verify_issuer: false,
   permissions: %{
     paladin: [:write_connections, :read_connections],
-  }
+  },
+  serializer: PhoenixGuardian.GuardianSerializer
 
 config :ueberauth, Ueberauth,
   providers: [
@@ -47,3 +48,5 @@ import_config "#{Mix.env}.exs"
 config :phoenix, :generators,
   migration: true,
   binary_id: false
+
+config :paladin, ecto_repos: []

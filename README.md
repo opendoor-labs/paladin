@@ -15,8 +15,8 @@ Paladin is setup to use within an Umbrella application.
 
 #### Setup your services
 
-1. Register you application with Paladin
-2. Register a second application with Paladin.
+1. Register your application with [Paladin](https://paladin.opendoor.com/) (use your [www.opendoor.com](https://www.opendoor.com/) login credentials)
+2. Register a second application with [Paladin](https://paladin.opendoor.com/).
 3. Configure a connection from one to another (including max permissions and TTL)
 
 #### Regular requests

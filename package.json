@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "deploy": "brunch build --production"
+  },
   "repository": {},
   "dependencies": {
     "babel-brunch": "^6.0.0",

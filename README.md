@@ -1,5 +1,7 @@
 # Paladin
 
+:warning: This project is archived and no longer maintained! :warning:
+
 <img src="https://dl.dropboxusercontent.com/u/526413/paladin-logo.png" >
 
 Paladin is an implementation of the OAuth2 assertion spec. It is intended to
